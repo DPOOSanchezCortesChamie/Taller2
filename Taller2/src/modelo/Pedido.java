@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.io.File;
+import java.io.FileWriter;
 
 public class Pedido {
 	private int numeroPedidos;
@@ -59,11 +60,20 @@ public class Pedido {
 		int precio = getPrecioNetoPedido();
 		return (int)(precio*0.19);
 	}
-	
+	/**
+	 * Devuelve el texto para usarse en la factura, con el id del pedido y el precio total
+	 * @return
+	 */
 	private String generarTextoFactura() {
-		
+		return idPedido + "; " + getPrecioTotalPedido();
 	}
+	/**
+	 * Guarda en el archivo el texto de la factura
+	 * @param archivo
+	 */
 	public void guardarFactura(File archivo) {
-		
+		FileWriter writer = new FileWriter(archivo.getPath());
+		writer.write(generarTextoFactura());
+		writer.close();
 	}
 }
