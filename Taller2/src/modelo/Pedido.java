@@ -25,7 +25,7 @@ public class Pedido {
 	 * @return
 	 */
 	public int getIdPedido() {
-		return idPedido;
+		return this.idPedido;
 	}
 	/**
 	 * Agrega un nuevo producto a la lista de productos del pedido
