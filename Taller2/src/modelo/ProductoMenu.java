@@ -4,7 +4,11 @@ public class ProductoMenu implements Producto{
 	
 	private String nombre;
 	private int precioBase;
-	
+	/**
+	 * Constructor de la clase ProductoMenu
+	 * @param nombre
+	 * @param precioBase
+	 */
 	public ProductoMenu(String nombre, int precioBase){
 		this.nombre = nombre;
 		this.precioBase = precioBase;
