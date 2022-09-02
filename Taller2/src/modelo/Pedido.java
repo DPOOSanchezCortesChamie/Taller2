@@ -3,12 +3,13 @@ package modelo;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class Pedido {
-	private int numeroPedidos;
+	private int numeroPedidos; //incluir en factura
 	private int idPedido;
-	private String nombreCliente;
-	private String direccionCliente;
+	private String nombreCliente; //incluir en factura
+	private String direccionCliente; //incluir en factura
 	private ArrayList<Producto> itemsPedido;
 	/**
 	 * Metodo constructor del objeto Pedido
@@ -25,7 +26,7 @@ public class Pedido {
 	 * @return
 	 */
 	public int getIdPedido() {
-		return idPedido;
+		return this.idPedido;
 	}
 	/**
 	 * Agrega un nuevo producto a la lista de productos del pedido
@@ -40,8 +41,8 @@ public class Pedido {
 	 */
 	private int getPrecioNetoPedido() {
 		int neto = 0;
-		for(int i = 0; i<this.itemsPedido.size();i++) {
-			neto += itemsPedido.get(i).getPrecio();
+		for(Producto p: itemsPedido) { 
+			neto += p.getPrecio();
 		}
 		return neto;
 	}
@@ -67,11 +68,13 @@ public class Pedido {
 	private String generarTextoFactura() {
 		return idPedido + "; " + getPrecioTotalPedido();
 	}
+	
 	/**
 	 * Guarda en el archivo el texto de la factura
 	 * @param archivo
+	 * @throws IOException 
 	 */
-	public void guardarFactura(File archivo) {
+	public void guardarFactura(File archivo) throws IOException {
 		FileWriter writer = new FileWriter(archivo.getPath());
 		writer.write(generarTextoFactura());
 		writer.close();
