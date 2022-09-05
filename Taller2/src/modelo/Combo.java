@@ -22,7 +22,7 @@ public class Combo implements Producto{
 	 * Agrega un producto a la lista de productos del combo
 	 * @param itemCombo
 	 */
-	public void agregarItemCombo(Producto itemCombo) {
+	public void agregarItemACombo(ProductoMenu itemCombo) {
 		itemsCombo.add(itemCombo);
 	}
 

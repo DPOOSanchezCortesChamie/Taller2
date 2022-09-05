@@ -34,17 +34,20 @@ public class Restaurante {
 			pedidos.add(pedidoEnCurso);
 	}
 	/**
-	 * Devuelve el pedido que esta en proceso
+	 * Devuelve el pedido que esta en proceso, si no hay imprime por consola
 	 * @return
 	 */
 	public Pedido getPedidoEnCurso() {
-		return pedidoEnCurso;
+		if(pedidoEnCurso != null) 
+			return pedidoEnCurso;
+		System.out.println("No hay pedido en curso");
+		return null;
 	}
 	/**
 	 * Devuelve el menu base del restaurante (preguntar)
 	 * @return
 	 */
-	public ArrayList<Producto> getMenuBase(){
+	public ArrayList<ProductoMenu> getMenuBase(){
 		return menuBase;
 	}
 	/**
@@ -124,7 +127,7 @@ public class Restaurante {
 				 for (String producto: items) {
 					 for (ProductoMenu p: menuBase) {
 						 if (p.getNombre() == producto) {
-							combi.agregarItemCombo(p);
+							combi.agregarItemACombo(p);
 						 	break;
 						 }
 					 }

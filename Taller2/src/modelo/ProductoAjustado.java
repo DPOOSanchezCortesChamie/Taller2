@@ -28,6 +28,4 @@ public class ProductoAjustado implements Producto{
 				//CAMILO CREA EL TEXTO FACTURA
 		return base.generarTextoFactura();
 	}
-	
-	
 }
