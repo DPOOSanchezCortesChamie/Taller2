@@ -59,7 +59,6 @@ public class Restaurante {
 		if (archivoIngredientes.exists()) {
 			ArrayList<String[]> lineas = lineas(archivoIngredientes);
 			for (int i = 0; i < lineas.size(); i++) {
-				System.out.println(i);
 				String[] linea = lineas.get(i);
 				String nombreIngrediente = linea[0];
 				int costoAdicional = Integer.parseInt(linea[1]);
@@ -115,7 +114,6 @@ public class Restaurante {
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 			String linea = br.readLine();
 			while (linea != null) {
-				System.out.println(linea);
 				String[] lineaPartes = linea.split(";");
 				lineas.add(lineaPartes);
 				linea = br.readLine();
