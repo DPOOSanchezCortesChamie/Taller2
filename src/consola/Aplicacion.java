@@ -1,26 +1,42 @@
 package consola;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import modelo.ProductoMenu;
 import modelo.Restaurante;
+import modelo.Ingrediente;
+import modelo.Producto;
+import modelo.ProductoAjustado;
+import modelo.Pedido;
+import modelo.Combo;
 
 public class Aplicacion {
 	
 	private Restaurante infoRestaurante;
 
-	public void ejecutarAplicacion() {
-	
+	public void ejecutarAplicacion() throws IOException {
+		
+		File ingredientesFile = new File("./data/ingredientes.txt");
+		File menuFile = new File("./data/menu.txt");
+		File combosFile = new File("./data/combos.txt");
+		
+		this.infoRestaurante = new Restaurante();
+		
+		this.infoRestaurante.cargarMenuRestaurante(ingredientesFile, menuFile, combosFile);
+		
 		System.out.println("Mix Burger - Servicio de pedidos: \n");
 
 		boolean continuar = true;
 		while (continuar) {
 			try {
 				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción: "));
 				if (opcion_seleccionada == 1)
-					foo();
+					mostrarItemsMenu();
 				else if (opcion_seleccionada == 2 && infoRestaurante != null)
 					foo();
 				else if (opcion_seleccionada == 3 && infoRestaurante != null)
@@ -53,6 +69,14 @@ public class Aplicacion {
 		System.out.println("6. Salir de la aplicación");
 	}
 	
+	public void mostrarItemsMenu() {
+		ArrayList<ProductoMenu> menu = this.infoRestaurante.getMenuBase();
+		for (ProductoMenu productoMenu: menu) {
+			System.out.println(productoMenu.getNombre() + " - $" + productoMenu.getPrecio());
+		}
+	}
+
+	
 	public String input(String mensaje) {
 		try {
 			System.out.print(mensaje);
@@ -66,11 +90,13 @@ public class Aplicacion {
 		return null;
 	}
 	
+	
+	
 	public Object foo() {
 		return null;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Aplicacion consola = new Aplicacion();
 		consola.ejecutarAplicacion();
 	}

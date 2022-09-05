@@ -16,14 +16,13 @@ public class Restaurante {
 	private ArrayList<Pedido> pedidos;
 	private Pedido pedidoEnCurso;
 	
-	public Restaurante(ArrayList<ProductoMenu> menuBase, ArrayList<Ingrediente> ingredientes, ArrayList<Combo> combos,
-			ArrayList<Pedido> pedidos, Pedido pedidoEnCurso) {
-		this.menuBase = menuBase;
-		this.ingredientes = ingredientes;
-		this.combos = combos;
-		this.pedidos = pedidos;
-		this.pedidoEnCurso = pedidoEnCurso;
-	} 
+	public Restaurante() {
+		this.menuBase = new ArrayList<ProductoMenu>(22);
+		this.ingredientes = new ArrayList<Ingrediente>(15);
+		this.combos = new ArrayList<Combo>(4);
+		this.pedidos = new ArrayList<Pedido>();
+		this.pedidoEnCurso = null;
+	}
 	
 	public void iniciarPedido(String nombreCliente, String direccionCliente) {
 		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
@@ -59,7 +58,8 @@ public class Restaurante {
 	private void cargarIngredientes(File archivoIngredientes) throws IOException {
 		if (archivoIngredientes.exists()) {
 			ArrayList<String[]> lineas = lineas(archivoIngredientes);
-			for (int i = 0; i > lineas.size(); i++) {
+			for (int i = 0; i < lineas.size(); i++) {
+				System.out.println(i);
 				String[] linea = lineas.get(i);
 				String nombreIngrediente = linea[0];
 				int costoAdicional = Integer.parseInt(linea[1]);
@@ -75,7 +75,7 @@ public class Restaurante {
 	private void cargarMenu(File archivoMenu) throws IOException {
 		if (archivoMenu.exists()) {
 			ArrayList<String[]> lineas = lineas(archivoMenu);
-			for (int i = 0; i > lineas.size(); i++) {
+			for (int i = 0; i < lineas.size(); i++) {
 				String[] linea = lineas.get(i);
 				String nombreMenu = linea[0];
 				int precioBase = Integer.parseInt(linea[1]);
@@ -90,10 +90,11 @@ public class Restaurante {
 	
 	private void cargarCombos(File archivoCombos) throws IOException {
 		ArrayList<String[]> lineas = lineas(archivoCombos);
-		for (int i = 0; i > lineas.size(); i++) {
+		for (int i = 0; i < lineas.size(); i++) {
 			String[] linea = lineas.get(i);
 			String nombreCombo = linea[0];
-			int precioBase = Integer.parseInt(linea[1]);
+			String precioBase = linea[1].substring(0, linea[1].length() - 1);
+			int descuento = Integer.parseInt(precioBase);
 			String[] productoMenuNombres = Arrays.copyOfRange(linea, 2, lineas.size());
 			ArrayList<ProductoMenu> productosCombo = new ArrayList<>();
 			for (ProductoMenu productoMenu: this.menuBase) {
@@ -103,7 +104,7 @@ public class Restaurante {
 					}
 				}
 			}
-			Combo combo = new Combo(productosCombo, precioBase, nombreCombo);
+			Combo combo = new Combo(productosCombo, descuento, nombreCombo);
 			this.combos.add(combo);
 		}
 	}
@@ -114,10 +115,12 @@ public class Restaurante {
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 			String linea = br.readLine();
 			while (linea != null) {
+				System.out.println(linea);
 				String[] lineaPartes = linea.split(";");
 				lineas.add(lineaPartes);
+				linea = br.readLine();
 			}
-		}
+		} 
 		return lineas;
 	}
 }
