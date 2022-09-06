@@ -7,15 +7,16 @@ import java.util.ArrayList;
 
 public class Pedido {
 	
-	private int numeroPedidos;
 	private int idPedido;
 	private String nombreCliente;
 	private String direccionCliente;
 	private ArrayList<Producto> itemsPedido;
 	
-	public Pedido(String nombreCliente, String direccionCliente) {
+	public Pedido(String nombreCliente, String direccionCliente, int idPedido) {
 		this.nombreCliente = nombreCliente;
 		this.direccionCliente = direccionCliente;
+		this.idPedido = idPedido;
+		this.itemsPedido = new ArrayList<Producto>();
 	}
 
 	public int getIdPedido() {
@@ -42,30 +43,17 @@ public class Pedido {
 		return getPrecioNetoPedido() + getPrecioIVAPedido();
 	}
 	
-	private String generarTextoFactura() {
+	public String generarTextoFactura() {
 		String textoFactura = "Mix - Burger\n";
-		textoFactura += "Id Pedido: " + Integer.toString(this.idPedido);
+		textoFactura += "Id Pedido: " + this.idPedido;
 		textoFactura += "\nCliente: " + this.nombreCliente;
 		textoFactura += "\nDirección cliente: " + this.direccionCliente;
-		textoFactura += "\n#Pedidos: " + Integer.toString(this.numeroPedidos);
-		
-		textoFactura += "\n Item  -  Valor \n";
-		
-		for (Producto item: itemsPedido) {
-			textoFactura += "\n-" + item.getNombre() + " -" + Integer.toString(item.getPrecio());
-		}
+		textoFactura += "\nTotal productos" + this.itemsPedido.size();
 		textoFactura += "\n Precio Neto: " + Integer.toString(getPrecioNetoPedido());
 		textoFactura += "\n Precio IVA: " + Integer.toString(getPrecioIVAPedido());
 		textoFactura += "\n Precio Total: " + Integer.toString(getPrecioTotalPedido()) + "\n ";
 		
-		textoFactura += "\n   Regrese pronto a Mix Burguer   \n...Disfrute su compra...";
-		
+		textoFactura += "\nRegrese pronto a Mix Burguer\n...Disfrute su compra...";
 		return textoFactura;
-	}
-	
-	public void guardarFactura(File archivo) throws IOException {
-		FileWriter writer = new FileWriter(archivo.getPath());
-		writer.write(generarTextoFactura());
-		writer.close();
 	}
 }
