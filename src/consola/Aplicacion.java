@@ -44,7 +44,7 @@ public class Aplicacion {
 				else if (opcion_seleccionada == 4 && infoRestaurante != null)
 					cerrarPedidoYGuardarFactura();
 				else if (opcion_seleccionada == 5 && infoRestaurante != null)
-					foo();
+					consultarPedidoId();
 				else if (opcion_seleccionada == 6) {
 					System.out.println("Saliendo de la aplicación ...");
 					continuar = false;
@@ -59,7 +59,14 @@ public class Aplicacion {
 		}	
 	}
 	
-	
+	public void consultarPedidoId() {
+		String idFactura = input("Ingrese un Id de 4 digitos a consultar: ");
+		for (String factura: this.infoRestaurante.getFacturas()) {
+			if (factura.substring(11, 15).equals(idFactura)) {
+				System.out.println(factura);
+			}
+		}
+	}		
 	
 	// Opción 4
 	public void cerrarPedidoYGuardarFactura() throws IOException {
