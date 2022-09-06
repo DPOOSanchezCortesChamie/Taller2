@@ -14,6 +14,7 @@ public class Restaurante {
 	private ArrayList<Ingrediente> ingredientes;
 	private ArrayList<Combo> combos;
 	private ArrayList<Pedido> pedidos;
+	private ArrayList<String> facturas;
 	private Pedido pedidoEnCurso;
 	
 	public Restaurante() {
@@ -21,11 +22,12 @@ public class Restaurante {
 		this.ingredientes = new ArrayList<Ingrediente>(15);
 		this.combos = new ArrayList<Combo>(4);
 		this.pedidos = new ArrayList<Pedido>();
+		this.facturas = new ArrayList<String>();
 		this.pedidoEnCurso = null;
 	}
 	
 	public void iniciarPedido(String nombreCliente, String direccionCliente) {
-		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
+		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente, 1000 + (int)(Math.random() * ((8234 - 1000) + 1)));
 	}
 	
 	public void cerrarYGuardarPedido() {
@@ -47,6 +49,14 @@ public class Restaurante {
 	
 	public ArrayList<Combo> getCombos() {
 		return this.combos;
+	}
+	
+	public ArrayList<Pedido> getPedidos() {
+		return this.pedidos;
+	}
+	
+	public ArrayList<String> getFacturas() {
+		return this.facturas;
 	}
 	
 	public void cargarMenuRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
@@ -118,7 +128,8 @@ public class Restaurante {
 				lineas.add(lineaPartes);
 				linea = br.readLine();
 			}
-		} 
+			br.close();
+		}
 		return lineas;
 	}
 }
